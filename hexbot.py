@@ -294,7 +294,7 @@ if __name__ == "__main__":
                     response = hexbot.handle_command(command, channel, user)
                     post_to_channel(channel, response)
                 except:
-                    post_to_channel(channel, "rip")
+                    post_to_channel(channel, "Something broke. But I'm still alive! `@hexbot assassin help` for help.)
             time.sleep(READ_WEBSOCKET_DELAY)
     else:
         print("Connection failed. Invalid Slack token or bot ID?")
