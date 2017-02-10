@@ -290,8 +290,11 @@ if __name__ == "__main__":
         while True:
             command, channel, user = parse_slack_output(slack_client.rtm_read())
             if command and channel:
-                response = hexbot.handle_command(command, channel, user)
-                post_to_channel(channel, response)
+                try:
+                    response = hexbot.handle_command(command, channel, user)
+                    post_to_channel(channel, response)
+                except:
+                    post_to_channel(channel, "rip")
             time.sleep(READ_WEBSOCKET_DELAY)
     else:
         print("Connection failed. Invalid Slack token or bot ID?")
