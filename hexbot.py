@@ -23,7 +23,7 @@ class assassinbot:
     REMOVE_COMMAND = "remove"
     KILL_COMMAND = "kill"
     EXPIRE_COMMAND = "expire"
-    LOAD_LAST_GAME_COMMAND = "Thomas_is_a_terrible_coder"
+    LOAD_LAST_GAME_COMMAND = "thomas_is_a_really_terrible_coder"
     
 
     game = assassin_game()
