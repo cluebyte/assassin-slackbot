@@ -25,6 +25,7 @@ class assassin_game:
     def load_last_game(self, channel_id):
         self.assassin_list = []
         self.survivor_list = []
+        self.channel = channel_id
         with open("assassin_chain.txt") as f
             lines = f.read().splitlines()
         for name in lines:
