@@ -25,7 +25,7 @@ class assassinbot:
     EXPIRE_COMMAND = "expire"
     LOAD_LAST_GAME_COMMAND = "Thomas_is_a_terrible_coder"
     
-    
+
     game = assassin_game()
     
     def help(self):
@@ -85,7 +85,7 @@ class assassinbot:
         if not self.game.is_player_alive(player):
             return False, "<@" + player + "> was not found for some reason."
         if self.game.is_player_alive(killer):
-            assassin = self.game.get_players_assassin(player)
+            assassin = self.game.get_players_assassin(player)b
             target = self.game.get_players_target(player)
             if len(self.game.get_remaining_players()) == 2:
                 return True, "<@" + player + "> was killed. <@" + assassin + "> won the game!"
@@ -309,7 +309,7 @@ if __name__ == "__main__":
                     response = hexbot.handle_command(command, channel, user)
                     post_to_channel(channel, response)
                 except:
-                    post_to_channel(channel, "Something broke. But I'm still alive! `@hexbot assassin help` for help.)
+                    post_to_channel(channel, "Something broke. But I'm still alive! `@hexbot assassin help` for help.")
             time.sleep(READ_WEBSOCKET_DELAY)
     else:
         print("Connection failed. Invalid Slack token or bot ID?")
