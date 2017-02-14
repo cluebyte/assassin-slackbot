@@ -22,6 +22,17 @@ class assassin_game:
             f.write(a.name + "\n")
         f.close();
         
+    def load_last_game(self, channel_id):
+        self.assassin_list = []
+        self.survivor_list = []
+        with open("assassin_chain.txt") as f
+            lines = f.read().splitlines()
+        for name in lines:
+            new_player = player()
+            new_player.name = name
+            self.assassin_list.append(new_player)
+            self.survivor_list.append(new_player)
+        
     def get_active_channel(self):
         return self.channel
         
@@ -43,12 +54,12 @@ class assassin_game:
                 return self.survivor_list[(i+len(self.survivor_list)-1)%len(self.survivor_list)].name
         return None
         
-    def kill_player(self, name):
+    def kill_player(self, name, killer):
         for i, player in enumerate(self.survivor_list):
             if player.name == name:
-                assassin = self.survivor_list[(i+len(self.survivor_list)-1)%len(self.survivor_list)]
                 self.survivor_list.remove(player)
-                assassin.killed_recently = True
+            if player.name == killer:
+                player.killed_recently = True
                 return True
         return False
     

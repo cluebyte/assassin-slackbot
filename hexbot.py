@@ -8,7 +8,7 @@ from slackclient import SlackClient
 
 BOT_ID = 'U3HBS30BS'
 AT_BOT = "<@U3HBS30BS>"
-TOKEN = "xoxb-119400102400-QR7uZq4hwlkCgPmbTOwK0m7T"
+TOKEN = "xoxb-119400102400-Hn1rAt5jkc8Ah29RmempFmAO"
 
 slack_client = SlackClient(TOKEN)
 
@@ -20,8 +20,10 @@ class assassinbot:
     NEW_GAME_COMMAND = "newgame"
     TARGET_COMMAND = "target"
     SURVIVORS_COMMAND = "survivors"
+    REMOVE_COMMAND = "remove"
     KILL_COMMAND = "kill"
     EXPIRE_COMMAND = "expire"
+    LOAD_LAST_GAME_COMMAND = "Thomas_is_a_terrible_coder"
     
     
     game = assassin_game()
@@ -47,6 +49,16 @@ class assassinbot:
             target = self.game.get_players_target(player)
             im_user(player, "Your target is <@" + target + ">")
         return "A new game has started!"
+        
+    def load_last_game(self,  channel):
+        #only allow games to be made in 'assassin' and 'bot_sandbox'
+        if channel != "C3DHYM12S" and channel != "C3K4GSMFH": 
+            return "Please only make a load game in the assassin channel"
+        self.game.load_last_game(channel)
+        for player in self.game.get_remaining_players():
+            target = self.game.get_players_target(player)
+            im_user(player, "Your target is <@" + target + ">")
+        return "I agree that he's a terrible coder. Please make sure your target hasn't changed."
         
     def target(self, user):
         if not self.game.is_ongoing_game():
@@ -77,7 +89,7 @@ class assassinbot:
             target = self.game.get_players_target(player)
             if len(self.game.get_remaining_players()) == 2:
                 return True, "<@" + player + "> was killed. <@" + assassin + "> won the game!"
-            self.game.kill_player(player)
+            self.game.kill_player(player, killer)
             im_user(assassin, "Your target is <@" + target + ">")
             return True, "<@" + player + "> was killed."
         else:
@@ -110,7 +122,7 @@ class assassinbot:
             
         return response
         
-    def remove(self, command):
+    def remove(self, command, channel):
         if not self.game.is_ongoing_game():
             return "Game not ongoing"
         if channel != self.game.get_active_channel(): 
@@ -152,7 +164,7 @@ class assassinbot:
         elif command[0] == self.EXPIRE_COMMAND:
             return self.expire(channel)
             
-        elif command[0] == self.KILL_COMMAND:
+        elif command[0] == self.REMOVE_COMMAND:
             return self.remove(command, channel)
                 
         elif command[0] == self.KILL_COMMAND:
@@ -161,6 +173,9 @@ class assassinbot:
                 post_to_channel(self.game.get_active_channel(), response)
                 return ""
                 
+        elif command[0] == self.LOAD_LAST_GAME_COMMAND:
+            return self.load_last_game(channel)
+            
         return response
         
 class hexbot:
